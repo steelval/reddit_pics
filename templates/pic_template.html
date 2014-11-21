@@ -1,6 +1,6 @@
 <h3 class="text-center"><a target="_blank" href="http://reddit.com{{ pic.data.permalink }}">{{ pic.data.title }}</a></h3>
-<div class="text-center">submitted 8 hours and 16 minutes ago by {{ pic.data.author }} to aww</div>
-<div class="text-center">{{ pic.data.score }} comments | Share | Tweet</div>
+<div class="text-center">{{ pic.data.created_utc | submitted }} by {{ pic.data.author }} to {{ pic.data.subreddit }}</div>
+<div class="text-center">{{ pic.data.score }} comments <!-- | Share | Tweet--></div>
 
 <br>
 <div>

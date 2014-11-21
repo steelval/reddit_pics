@@ -26,10 +26,10 @@
         return {
             link: function(scope, element, attrs){
                 element.bind("error", function(e){
-                    this.src = "img/oops.jpg";
+                    this.src = "static/img/oops.jpg";
                 });
                 element[0].onerror = function (evt){
-                    this.src = "img/oops.jpg";
+                    this.src = "static/img/oops.jpg";
                 }
             }
         }
