@@ -2,32 +2,43 @@
 (function (){
     var app = angular.module('reddit', []);
 
-    app.controller('RedditController', function () {
-        this.pics = all_pics;
+    app.controller('RedditController', ['$http', function($http){
+        var all_pics = this;
+        all_pics.pics = [];
+
+        $http.get('http://www.reddit.com/r/pics/.json?&jsonp=').success(function(data){
+             all_pics.pics = data.data.children;
+        });
+    }]);
+
+    app.filter('addExtension', function(){
+        return function(input) {
+            var a = input.split(".").pop();
+            if( a.length === 3 || a.length === 4 ) {
+                return input;
+            }
+            return input + ".jpg";
+        }
     });
 
-    var all_pics = [
-        {kind: "t2",
-            data: {
-                author: "JEWPACOLYPSE",
-                subreddit: "aww",
-                score: "277",
-                title: "They get along fairly well",
-                url: "http://i.imgur.com/pXo6yG5.jpg",
-                created: 123456789.0
-            }
-        },
-        {kind: "t2",
-            data: {
-                author: "JEWPACOLYPSE",
-                subreddit: "aww",
-                score: "5910",
-                title: "Current march in Mexico City against the government, taken in the Zocalo. Bring awareness to our cause, please.",
-                url: "http://i.imgur.com/rzzs9Sk.jpg.gif",
-                created: 123456789.0
+    app.directive('watchimg', function(){
+        return {
+            link: function(scope, element, attrs){
+                element.bind("error", function(e){
+                    this.src = "img/oops.jpg";
+                });
+                element[0].onerror = function (evt){
+                    this.src = "img/oops.jpg";
+                }
             }
         }
-    ]
+    });
 
+    app.directive("singlePic", function() {
+        return {
+            restrict: 'E',
+            templateUrl: "templates/pic_template.html"
+        };
+    });
 
 })();
